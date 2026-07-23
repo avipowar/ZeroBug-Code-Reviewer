@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, DM_Sans, Outfit } from "next/font/google";
+import { Geist, Geist_Mono, DM_Sans, Outfit, Oxanium } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -10,7 +10,7 @@ const outfitHeading = Outfit({
   variable: "--font-heading",
 });
 
-const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
+const oxanium = Oxanium({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,21 +42,22 @@ export default function RootLayout({
         geistSans.variable,
         geistMono.variable,
         "font-sans",
-        dmSans.variable,
+        oxanium.variable,
         outfitHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-background text-foreground">
         <QueryProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
+            forcedTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
             {children}
           </ThemeProvider>
-        </QueryProvider> 
+        </QueryProvider>
       </body>
     </html>
   );
