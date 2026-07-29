@@ -32,7 +32,7 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
   return (
     <Card>
       <CardHeader className="items-center text-center">
-        <div className="mb-6 flex justify-center pt-2">
+        <div className="flex justify-center pt-2">
           <Image
             src="/logo07.png"
             alt="Chai AI Code Reviewer"
