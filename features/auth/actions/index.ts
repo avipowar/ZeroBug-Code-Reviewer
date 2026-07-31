@@ -4,7 +4,7 @@ import {
   DEFAULT_AUTH_CALLBACK,
   getSafeCallbackPath,
   SIGN_IN_PATH,
-} from "@/features/utils";
+} from "@/features/auth/utils";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
