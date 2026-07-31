@@ -1,5 +1,6 @@
 "use client";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { UserMenuWithSession } from "@/features/auth/components/user-menu";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 
