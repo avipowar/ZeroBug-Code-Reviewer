@@ -35,7 +35,7 @@ export async function getInstallationStatus(userId: string) {
   });
 
   if (!installation) {
-    return buildDisconnectedStatus;
+    return buildDisconnectedStatus();
   }
 
   return {

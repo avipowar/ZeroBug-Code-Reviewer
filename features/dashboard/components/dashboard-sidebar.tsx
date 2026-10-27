@@ -38,7 +38,7 @@ export function DashboardSidebar({
                 <Link href={DASHBOARD_ROUTES.overview}>
                   <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-none bg-sidebar">
                     <Image
-                      src="/logo-002.png"
+                      src="/logo07.png"
                       alt=""
                       width={62}
                       height={62}

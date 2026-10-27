@@ -62,7 +62,7 @@ function ConnectedActions() {
       </Button>
     </form>
   );
-}
+} 
 
 function DisconnectedActions({ installUrl }: { installUrl: string }) {
   return (
@@ -127,36 +127,41 @@ export function GithubConnectCard({
     statusLabel = "Connected";
   }
 
-  <div className="flex flex-1 flex-col gap-6 p-6">
-    <Card className={cn("max-w-2xl transition-colors", cardBorderClass)}>
-      <CardHeader>
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span
-              className={cn(
-                "flex size-10 items-center justify-center rounded-none border",
-                iconWrapperClass,
-              )}
-            >
-              <GithubLogo className="size-5" />
-            </span>
-            <div>
-              <CardTitle>GitHub App</CardTitle>
-              <CardDescription>
-                Install the Zerobug Code reviewer app on your GitHub account or
-                organization to access public and private repositories.
-              </CardDescription>
+  return (
+    <div className="flex flex-1 flex-col gap-6 p-6">
+      <Card className={cn("max-w-2xl transition-colors", cardBorderClass)}>
+        <CardHeader>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span
+                className={cn(
+                  "flex size-10 items-center justify-center rounded-none border",
+                  iconWrapperClass,
+                )}
+              >
+                <GithubLogo className="size-5" />
+              </span>
+              <div>
+                <CardTitle>GitHub App</CardTitle>
+                <CardDescription>
+                  Install the Zerobug Code reviewer app on your GitHub account
+                  or organization to access public and private repositories.
+                </CardDescription>
+              </div>
             </div>
+            <span className={statusBadge(statusTone)}>{statusLabel}</span>
           </div>
-          <span className={statusBadge(statusTone)}>{statusLabel}</span>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <ConnectionDetails connected={connected} accountLogin={accountLogin} />
-      </CardContent>
-      <CardFooter className="flex flex-wrap gap-2">
-        <ConnectionActions connected={connected} installUrl={installUrl} />
-      </CardFooter>
-    </Card>
-  </div>;
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <ConnectionDetails
+            connected={connected}
+            accountLogin={accountLogin}
+          />
+        </CardContent>
+        <CardFooter className="flex flex-wrap gap-2">
+          <ConnectionActions connected={connected} installUrl={installUrl} />
+        </CardFooter>
+      </Card>
+    </div>
+  );
 }
