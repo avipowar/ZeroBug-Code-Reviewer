@@ -62,7 +62,7 @@ function ConnectedActions() {
       </Button>
     </form>
   );
-} 
+}
 
 function DisconnectedActions({ installUrl }: { installUrl: string }) {
   return (

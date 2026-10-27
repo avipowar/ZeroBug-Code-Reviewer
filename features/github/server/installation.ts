@@ -72,7 +72,27 @@ export async function saveInstallation(userId: string, installationId: number) {
 }
 
 export async function deleteInstallation(userId: string) {
-  await prisma.githubInstallation.delete({ where: { userId } });
+  // check user installation id
+  const installation = await prisma.githubInstallation.findUnique({
+    where: { userId },
+    select: { installationId: true },
+  });
+
+  if (installation?.installationId) {
+    try {
+      const app = getGithubApp();
+      await app.octokit.request("DELETE /app/installations/{installation_id}", {
+        installation_id: installation.installationId,
+      });
+      console.log(
+        `GitHub se installation ${installation.installationId} successfully delete ho gaya`,
+      );
+    } catch (error) {
+      console.error("Error deleting GitHub installation:", error);
+    }
+  }
+  // delete installation from database
+  await prisma.githubInstallation.deleteMany({ where: { userId } });
 }
 
 export async function getUserIdByInstallationId(installationId: number) {
@@ -95,7 +115,7 @@ export async function getUserInstallationId(userId: string) {
   });
 
   if (!installation) {
-    return true;
+    return null;
   }
 
   return installation.installationId;
