@@ -10,6 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  
 }
 
 model Test {
@@ -44,6 +45,25 @@ model GithubInstallation {
   updatedAt      DateTime @updatedAt
 
   @@map("github_installation")
+}
+
+model PullRequest{
+  id String @id @default(cuid())
+  installationId Int
+  repoFullName String // e.g "owner/repo"
+  prNumber Int
+  title String
+  authorLogin String?
+  headSha String //latest commit on the PR branch
+  baseBranch String
+  status String @default("pending") // pending | processing | reviewed | rate_limited
+  reviewComment String? // AI-generated markdown saved after review completed     
+  reviewedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt   
+
+  @@unique([repoFullName, prNumber])
+  @@map("pull_request")
 }
 
 model Session {
