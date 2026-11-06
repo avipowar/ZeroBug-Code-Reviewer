@@ -1,5 +1,6 @@
 import { savePullRequest } from "@/features/reviews/server/save-pull-request";
 import { getGithubApp } from "../utils/github-app";
+import { inngest } from "@/features/inngest/client";
 
 const REVIEWABLE_ACTIONS = ["opened", "synchronize", "reopened"];
 
@@ -27,9 +28,8 @@ async function isSignatureValid(payload: string, signature: string | null) {
 
   const app = getGithubApp();
   const isValid = await app.webhooks.verify(payload, signature);
-  console.log("Verification result:", isValid);
 
-  return isValid; 
+  return isValid;
 }
 
 export async function handleGithubWebhook(request: Request) {
@@ -49,7 +49,12 @@ export async function handleGithubWebhook(request: Request) {
 
   const event = JSON.parse(payload) as PullRequestWebhookPayload;
 
-  console.log("event", event);
+  console.log("Webhook received");
+
+  console.log("Event:", event);
+  console.log("Action:", event.action);
+  console.log("Repository:", event.repository.full_name);
+  console.log("PR Number:", event.pull_request.number);
 
   if (!REVIEWABLE_ACTIONS.includes(event.action)) {
     return Response.json({ received: true });
@@ -57,9 +62,10 @@ export async function handleGithubWebhook(request: Request) {
 
   const pullRequest = await savePullRequest(event);
 
-  // todo : map Github's installation id
-
-  // todo: TriggerReviewJob
+  await inngest.send({
+    name: "github/pr.received",
+    data: { pullRequestId: pullRequest.id },
+  });
 
   return Response.json({ received: true });
 }
